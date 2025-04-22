@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>世界读书日主题征文活动 - 心之所向，文墨生光</title>
+  <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.staticfile.org/tailwindcss/2.2.19/tailwind.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap">
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@latest/dist/mermaid.min.js"></script>
+  <style>
+    :root {
+      --primary-color: #3b5a9d;
+      --secondary-color: #f0b67f;
+      --accent-color: #fe5f55;
+      --text-color: #333333;
+      --bg-color: #ffffff;
+      --bg-secondary: #f8f9fa;
+      --border-color: #e2e8f0;
+    }
+    
+    .dark {
+      --primary-color: #81a1e1;
+      --secondary-color: #d4976a;
+      --accent-color: #ff7b72;
+      --text-color: #e2e8f0;
+      --bg-color: #1a202c;
+      --bg-secondary: #2d3748;
+      --border-color: #4a5568;
+    }
+    
+    body {
+      font-family: 'Noto Sans SC', Tahoma, Arial, Roboto, "Droid Sans", "Helvetica Neue", "Droid Sans Fallback", "Heiti SC", "Hiragino Sans GB", Simsun, sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Noto Serif SC', serif;
+    }
+    
+    .serif {
+      font-family: 'Noto Serif SC', serif;
+    }
+    
+    .sans {
+      font-family: 'Noto Sans SC', sans-serif;
+    }
+    
+    .first-letter::first-letter {
+      font-size: 3.5rem;
+      float: left;
+      line-height: 0.8;
+      margin-right: 0.1em;
+      color: var(--primary-color);
+      font-family: 'Noto Serif SC', serif;
+      font-weight: 700;
+    }
+    
+    .theme-card {
+      border: 1px solid var(--border-color);
+      background-color: var(--bg-secondary);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .theme-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .timeline-item {
+      position: relative;
+      padding-left: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .timeline-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+    }
+    
+    .timeline-item::after {
+      content: "";
+      position: absolute;
+      left: 0.5rem;
+      top: 1.5rem;
+      width: 0.125rem;
+      height: calc(100% + 0.5rem);
+      background-color: var(--border-color);
+    }
+    
+    .timeline-item:last-child::after {
+      display: none;
+    }
+    
+    .award-card {
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .award-card:hover {
+      transform: scale(1.03);
+    }
+    
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    
+    .btn-primary:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-2px);
+    }
+    
+    .theme-divider {
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+      border-radius: 3px;
+    }
+    
+    .floating-action {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 50;
+    }
+    
+    @media (max-width: 768px) {
+      .first-letter::first-letter {
+        font-size: 2.5rem;
+      }
+    }
+    
+    /* 书本翻页动画 */
+    .book-page {
+      position: relative;
+      perspective: 1500px;
+    }
+    
+    .page-content {
+      transform-style: preserve-3d;
+      transition: transform 0.5s;
+    }
+    
+    .book-page:hover .page-content {
+      transform: rotateY(-10deg);
+      box-shadow: 20px 10px 50px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* 主题选择卡片悬停特效 */
+    .theme-hover-effect {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .theme-hover-effect::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+      );
+      transition: left 0.7s;
+    }
+    
+    .theme-hover-effect:hover::after {
+      left: 100%;
+    }
+  </style>
+</head>
+<body>
+  <!-- 导航栏 -->
+  <nav class="sticky top-0 z-50 bg-opacity-95 backdrop-filter backdrop-blur-sm" style="background-color: var(--bg-color);">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center border-b" style="border-color: var(--border-color);">
+      <div class="flex items-center space-x-2">
+        <i class="fas fa-book-open text-2xl" style="color: var(--primary-color);"></i>
+        <span class="serif font-bold text-lg md:text-xl">世界读书日</span>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="#about" class="hidden md:block hover:text-opacity-70" style="color: var(--text-color);">活动背景</a>
+        <a href="#theme" class="hidden md:block hover:text-opacity-70" style="color: var(--text-color);">活动主题</a>
+        <a href="#guidelines" class="hidden md:block hover:text-opacity-70" style="color: var(--text-color);">投稿须知</a>
+        <a href="#awards" class="hidden md:block hover:text-opacity-70" style="color: var(--text-color);">奖励设置</a>
+        <button id="theme-toggle" class="p-2 rounded-full focus:outline-none" aria-label="切换深色/浅色模式">
+          <i class="fas fa-moon dark:hidden" style="color: var(--text-color);"></i>
+          <i class="fas fa-sun hidden dark:block" style="color: var(--text-color);"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero 区域 -->
+  <header class="relative py-20 md:py-32 overflow-hidden" style="background-color: var(--bg-secondary);">
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute inset-0 bg-repeat" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgdmlld0JveD0iMCAwIDYwIDYwIj48ZyBmaWxsPSJjdXJyZW50Q29sb3IiPjxwYXRoIGQ9Ik0zNiAzMGEzIDMgMCAxIDAgNiAwIDMgMyAwIDAgMC02IDB6bS0xOCAwYTMgMyAwIDEgMCA2IDAgMyAzIDAgMCAwLTYgMHptMC0xOGEzIDMgMCAxIDAgNiAwIDMgMyAwIDAgMC02IDB6bTE4IDBhMyAzIDAgMSAwIDYgMCAzIDMgMCAwIDAtNiAwem0wIDM2YTMgMyAwIDEgMCA2IDAgMyAzIDAgMCAwLTYgMHptLTE4IDBhMyAzIDAgMSAwIDYgMCAzIDMgMCAwIDAtNiAweiI+PC9wYXRoPjwvZz48L3N2Zz4=');"></div>
+    </div>
+    <div class="container mx-auto px-4 relative">
+      <div class="max-w-3xl mx-auto text-center">
+        <h1 class="serif text-4xl md:text-6xl font-bold mb-4" style="color: var(--primary-color);">世界读书日主题征文活动</h1>
+        <div class="theme-divider w-32 mx-auto my-6"></div>
+        <h2 class="serif text-2xl md:text-3xl font-medium mb-8" style="color: var(--secondary-color);">——「心之所向，文墨生光」</h2>
+        <p class="text-lg md:text-xl leading-relaxed mb-8">用文字照亮自我，也温暖他人。<br>让我们用笔尖相连，共建一个温暖、有力量的阅读社区。</p>
+        <div class="flex flex-col md:flex-row justify-center gap-4 mt-8">
+          <a href="#theme" class="btn-primary px-6 py-3 rounded-lg font-medium flex items-center justify-center">
+            <i class="fas fa-pen-fancy mr-2"></i>
+            查看主题
+          </a>
+          <a href="#guidelines" class="border px-6 py-3 rounded-lg font-medium flex items-center justify-center" style="border-color: var(--border-color); color: var(--text-color);">
+            <i class="fas fa-file-alt mr-2"></i>
+            投稿须知
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 主要内容区 -->
+  <main class="container mx-auto px-4 py-12">
+    <!-- 活动背景 -->
+    <section id="about" class="max-w-4xl mx-auto mb-20">
+      <div class="flex items-center mb-8">
+        <div class="w-12 h-1 mr-4" style="background-color: var(--primary-color);"></div>
+        <h2 class="serif text-3xl font-bold">活动背景</h2>
+      </div>
+      <div class="book-page p-8 rounded-lg shadow-lg" style="background-color: var(--bg-secondary);">
+        <div class="page-content">
+          <p class="first-letter text-lg leading-relaxed">在这个碎片化阅读的时代，总有一本书、一段文字，曾点亮你的精神世界。值此世界读书日之际，微信读书社群特别发起主题征文活动，以"心之所向，文墨生光"为主题，邀请每一位书友用文字记录内心的感动与思考。让我们用笔尖相连，共建一个温暖、有力量的阅读社区。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 活动主题 -->
+    <section id="theme" class="max-w-5xl mx-auto mb-20">
+      <div class="flex items-center mb-8">
+        <div class="w-12 h-1 mr-4" style="background-color: var(--primary-color);"></div>
+        <h2 class="serif text-3xl font-bold">活动主题</h2>
+      </div>
+      <div class="text-center mb-10">
+        <h3 class="serif text-2xl font-semibold mb-2" style="color: var(--secondary-color);">「心之所向，文墨生光」</h3>
+        <p class="text-lg italic">——用文字照亮自我，也温暖他人。</p>
+      </div>
+      <p class="text-center mb-8">你可以围绕以下任一角度，书写你心中的光：</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 现实题材 -->
+        <div class="theme-card theme-hover-effect rounded-lg overflow-hidden shadow-md">
+          <div class="h-3" style="background-color: var(--primary-color);"></div>
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-city text-2xl mr-3" style="color: var(--primary-color);"></i>
+              <h4 class="serif text-xl font-semibold">现实题材</h4>
+            </div>
+            <p class="text-sm leading-relaxed">以生活为源，关注社会热点（如环保、教育、医疗等），记录你对现实的观察与思考。</p>
+          </div>
+        </div>
+        
+        <!-- 科幻题材 -->
+        <div class="theme-card theme-hover-effect rounded-lg overflow-hidden shadow-md">
+          <div class="h-3" style="background-color: var(--secondary-color);"></div>
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-rocket text-2xl mr-3" style="color: var(--secondary-color);"></i>
+              <h4 class="serif text-xl font-semibold">科幻题材</h4>
+            </div>
+            <p class="text-sm leading-relaxed">放飞想象，探索未知世界，畅想科技、未来与人性。</p>
+          </div>
+        </div>
+        
+        <!-- 爱情题材 -->
+        <div class="theme-card theme-hover-effect rounded-lg overflow-hidden shadow-md">
+          <div class="h-3" style="background-color: var(--accent-color);"></div>
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-heart text-2xl mr-3" style="color: var(--accent-color);"></i>
+              <h4 class="serif text-xl font-semibold">爱情题材</h4>
+            </div>
+            <p class="text-sm leading-relaxed">书写温柔与热烈，展现真挚情感，触碰内心柔软之处。</p>
+          </div>
+        </div>
+        
+        <!-- 悬疑题材 -->
+        <div class="theme-card theme-hover-effect rounded-lg overflow-hidden shadow-md">
+          <div class="h-3" style="background-color: var(--primary-color);"></div>
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-magnifying-glass text-2xl mr-3" style="color: var(--primary-color);"></i>
+              <h4 class="serif text-xl font-semibold">悬疑题材</h4>
+            </div>
+            <p class="text-sm leading-relaxed">营造神秘氛围，循线索探寻真相，让阅读充满紧张与惊喜。</p>
+          </div>
+        </div>
+        
+        <!-- 成长题材 -->
+        <div class="theme-card theme-hover-effect rounded-lg overflow-hidden shadow-md md:col-span-2 lg:col-span-1">
+          <div class="h-3" style="background-color: var(--secondary-color);"></div>
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-seedling text-2xl mr-3" style="color: var(--secondary-color);"></i>
+              <h4 class="serif text-xl font-semibold">成长题材</h4>
+            </div>
+            <p class="text-sm leading-relaxed">记录成长的蜕变与迷茫，从故事中发现自己的影子，体会成长的意义和美好。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 主题关系图 -->
+    <section class="max-w-4xl mx-auto mb-20">
+      <div class="flex items-center mb-8">
+        <div class="w-12 h-1 mr-4" style="background-color: var(--primary-color);"></div>
+        <h2 class="serif text-3xl font-bold">主题关系图</h2>
+      </div>
+      <div class="p-6 rounded-lg shadow-lg" style="background-color: var(--bg-secondary);">
+        <div class="mermaid-wrapper">
+          <pre class="mermaid">
+            graph TD
+              A["心之所向<br>文墨生光"] --> B["现实题材"]
+              A --> C["科幻题材"]
+              A --> D["爱情题材"]
+              A --> E["悬疑题材"]
+              A --> F["成长题材"]
+              
+              B --> B1["社会观察"]
+              B --> B2["热点思考"]
+              B --> B3["生活记录"]
+              
+              C --> C1["未来想象"]
+              C --> C2["科技与人性"]
+              
+              D --> D1["情感表达"]
+              D --> D2["关系探索"]
+              
+              E --> E1["谜题设计"]
+              E --> E2["氛围营造"]
+              
+              F --> F1["蜕变历程"]
+              F --> F2["自我发现"]
+              
+              style A fill:#3b5a9d,stroke:#333,color:#fff
+              style B fill:#f0b67f,stroke:#333
+              style C fill:#f0b67f,stroke:#333
+              style D fill:#f0b67f,stroke:#333
+              style E fill:#f0b67f,stroke:#333
+              style F fill:#f0b67f,stroke:#333
+          </pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 投稿须知 -->
+    <section id="guidelines" class="max-w-4xl mx-auto mb-20">
+      <div class="flex items-center mb-8">
+        <div class="w-12 h-1 mr-4" style="background-color: var(--primary-color);"></div>
+        <h2 class="serif text-3xl font-bold">投稿须知</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div class="rounded-lg overflow-hidden shadow-lg" style="background-color: var(--bg-secondary);">
+          <div class="p-6">
+            <h3 class="serif text-xl font-semibold mb-4">作品要求</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <i class="fas fa-pen-nib mt-1 mr-3" style="color: var(--primary-color);"></i>
+                <div>
+                  <span class="font-medium">体裁：</span>散文、随笔、书信体等，鼓励创新（可参考《城南旧事》的叙事风格）
+                </div>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-text-height mt-1 mr-3" style="color: var(--primary-color);"></i>
+                <div>
+                  <span class="font-medium">字数：</span>1000-3000字
+                  <div class="text-sm opacity-80">（如为短篇故事，可附3-5张读书笔记或手账照片）</div>
+                </div>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-copyright mt-1 mr-3" style="color: var(--primary-color);"></i>
+                <div>
+                  <span class="font-medium">原创性：</span>仅接受未公开发表的原创作品，严禁抄袭、洗稿或AI生成
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="rounded-lg overflow-hidden shadow-lg" style="background-color: var(--bg-secondary);">
+          <div class="p-6">
+            <h3 class="serif text-xl font-semibold mb-4">提交方式</h3>
+            <ul class="space-y-3">
+              <li class="flex items-start">
+                <i class="fas fa-file-word mt-1 mr-3" style="color: var(--secondary-color);"></i>
+                <div>
+                  <span class="font-medium">投稿格式：</span>Word文档
+                </div>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-paper-plane mt-1 mr-3" style="color: var(--secondary-color);"></i>
+                <div>
+                  <span class="font-medium">提交方式：</span>发送至管理员
+                </div>
+              </li>
+              <li class="flex items-start">
+                <i class="fas fa-calendar-alt mt-1 mr-3" style="color: var(--secondary-color);"></i>
+                <div>
+                  <span class="font-medium">截止时间：</span>2025年5月20日24:00
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 时间线 -->
+    <section class="max-w-3xl mx-auto mb-20">
+      <div class="flex items-center mb-8">
+        <div class="w-12 h-1 mr-4" style="background-color: var(--primary-color);"></div>
+        <h2 class="serif text-3xl font-bold">活动时间线</h2>
+      </div>
+      <div class="p-8 rounded-lg shadow-lg" style="background-color: var(--bg-secondary);">
+        <div class="timeline">
+          <div class="timeline-item">
+            <h4 class="serif font-semibold text-lg mb-1">活动启动</h4>
+            <p class="text-sm opacity-80">2025年4月23日（世界读书日）</p>
+            <p class="mt-2">活动正式开始，开放投稿通道</p>
+          </div>
+          
+          <div class="timeline-item">
+            <h4 class="serif font-semibold text-lg mb-1">投稿截止</h4>
+            <p class="text-sm opacity-80">2025年5月20日 24:00</p>
+            <p class="mt-2">所有参赛作品必须在此时间前提交</p>
+          </div>
+          
+          <div class="timeline-item">
+            <h4 class="serif font-semibold text-lg mb-1">评审阶段</h4>
+            <p class="text-sm opacity-80">2025年5月21日 - 5月31日</p>
+            <p class="mt-2">专业评委对作品进行审阅与评分</p>
+          </div>
+          
+          <div class="timeline-item">
+            <h4 class="serif font-semibold text-lg mb-1">结果公布</h4>
+            <p class="text-sm opacity-80">2025年6月5日</p>
+            <p class="mt-2">获奖名单公布，并安排奖品发放</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 奖励设置 -->
+    <section id="awards" class="max-w-5xl mx-auto mb-20">
+      <div class="flex items-center mb-8">
+        <div class="w-12 h-1 mr-4" style="background-color: var(--primary-color);"></div>
+        <h2 class="serif text-3xl font-bold">奖励设置</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <!-- 一等奖 -->
+        <div class="award-card rounded-lg overflow-hidden shadow-lg" style="background-color: var(--bg-secondary);">
+          <div class="h-2" style="background: linear-gradient(90deg, #FFD700, #FFA500);"></div>
+          <div class="p-6 text-center">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background-color: var(--primary-color);">
+              <i class="fas fa-trophy text-2xl text-white"></i>
+            </div>
+            <h4 class="serif text-xl font-bold mb-2">一等奖</h4>
+            <div class="space-y-2 mt-4">
+              <p>电影票1-2张</p>
+              <p class="text-sm">或</p>
+              <p>实体书（80元内任选）</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 二等奖 -->
+        <div class="award-card rounded-lg overflow-hidden shadow-lg" style="background-color: var(--bg-secondary);">
+          <div class="h-2" style="background: linear-gradient(90deg, #C0C0C0, #A9A9A9);"></div>
+          <div class="p-6 text-center">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background-color: var(--secondary-color);">
+              <i class="fas fa-medal text-2xl text-white"></i>
+            </div>
+            <h4 class="serif text-xl font-bold mb-2">二等奖</h4>
+            <div class="space-y-2 mt-4">
+              <p>近期热文实体书</p>
+              <p class="text-sm">（50元内任选）</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 三等奖 -->
+        <div class="award-card rounded-lg overflow-hidden shadow-lg" style="background-color: var(--bg-secondary);">
+          <div class="h-2" style="background: linear-gradient(90deg, #CD7F32, #B87333);"></div>
+          <div class="p-6 text-center">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background-color: var(--accent-color);">
+              <i class="fas fa-award text-2xl text-white"></i>
+            </div>
+            <h4 class="serif text-xl font-bold mb-2">三等奖</h4>
+            <div class="space-y-2 mt-4">
+              <p>微读会员1个月</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 优秀奖 -->
+        <div class="award-card rounded-lg overflow-hidden shadow-lg" style="background-color: var(--bg-secondary);">
+          <div class="h-2" style="background: linear-gradient(90deg, #6A5ACD, #483D8B);"></div>
+          <div class="p-6 text-center">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center" style="background-color: var(--primary-color); opacity: 0.8;">
+              <i class="fas fa-bookmark text-2xl text-white"></i>
+            </div>
+            <h4 class="serif text-xl font-bold mb-2">四至十名</h4>
+            <div class="space-y-2 mt-4">
+              <p>微读任意书籍1-2本</p>
+              <p class="text-sm">（由小群体赞助）</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 温馨提示 -->
+    <section class="max-w-4xl mx-auto mb-20">
+      <div class="flex items-center mb-8">
+        <div class="w-12 h-1 mr-4" style="background-color: var(--primary-color);"></div>
+        <h2 class="serif text-3xl font-bold">温馨提示</h2>
+      </div>
+      <div class="p-8 rounded-lg shadow-lg text-center" style="background-color: var(--bg-secondary);">
+        <i class="fas fa-lightbulb text-4xl mb-4" style="color: var(--secondary-color);"></i>
+        <p class="text-lg leading-relaxed">本次征文旨在搭建一个真诚、温暖的交流平台。请用心书写属于你的故事，让文字成为照亮彼此的光。</p>
+      </div>
+    </section>
+
+    <!-- 延伸阅读 -->
+    <section class="max-w-5xl mx-auto mb-20">
+      <div class="flex items-center mb-8">
+        <div class="w-12 h-1 mr-4" style="background-color: var(--primary-color);"></div>
+        <h2 class="serif text-3xl font-bold">延伸阅读</h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- 推荐书籍1 -->
+        <div class="theme-card rounded-lg overflow-hidden shadow-md">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-book text-2xl mr-3" style="color: var(--primary-color);"></i>
+              <h4 class="serif text-xl font-semibold">《写作这回事》</h4>
+            </div>
+            <p class="text-sm mb-3"><span class="opacity-70">作者：</span>斯蒂芬·金</p>
+            <p class="text-sm leading-relaxed">畅销作家斯蒂芬·金分享他的写作经验与技巧，适合想要提升写作能力的读者。</p>
+          </div>
+        </div>
+        
+        <!-- 推荐书籍2 -->
+        <div class="theme-card rounded-lg overflow-hidden shadow-md">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-book text-2xl mr-3" style="color: var(--secondary-color);"></i>
+              <h4 class="serif text-xl font-semibold">《城南旧事》</h4>
+            </div>
+            <p class="text-sm mb-3"><span class="opacity-70">作者：</span>林海音</p>
+            <p class="text-sm leading-relaxed">本次征文推荐参考的叙事风格范本，细腻的情感描写和独特的儿童视角。</p>
+          </div>
+        </div>
+        
+        <!-- 推荐书籍3 -->
+        <div class="theme-card rounded-lg overflow-hidden shadow-md">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-book text-2xl mr-3" style="color: var(--accent-color);"></i>
+              <h4 class="serif text-xl font-semibold">《如何阅读一本书》</h4>
+            </div>
+            <p class="text-sm mb-3"><span class="opacity-70">作者：</span>莫提默·J. 艾德勒</p>
+            <p class="text-sm leading-relaxed">帮助读者提升阅读理解能力，从阅读中获取更多洞见与灵感。</p>
+          </div>
+        </div>
+        
+        <!-- 推荐书籍4 -->
+        <div class="theme-card rounded-lg overflow-hidden shadow-md">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-book text-2xl mr-3" style="color: var(--primary-color);"></i>
+              <h4 class="serif text-xl font-semibold">《故事：材质、结构、风格和银幕剧作的原理》</h4>
+            </div>
+            <p class="text-sm mb-3"><span class="opacity-70">作者：</span>罗伯特·麦基</p>
+            <p class="text-sm leading-relaxed">讲述如何构建引人入胜的故事，特别适合想要尝试短篇小说创作的参赛者。</p>
+          </div>
+        </div>
+        
+        <!-- 推荐书籍5 -->
+        <div class="theme-card rounded-lg overflow-hidden shadow-md md:col-span-2 lg:col-span-1">
+          <div class="p-6">
+            <div class="flex items-center mb-4">
+              <i class="fas fa-book text-2xl mr-3" style="color: var(--secondary-color);"></i>
+              <h4 class="serif text-xl font-semibold">《朗读者》</h4>
+            </div>
+            <p class="text-sm mb-3"><span class="opacity-70">作者：</span>董卿</p>
+            <p class="text-sm leading-relaxed">基于同名节目整理的文集，收录了许多经典美文与感人故事，可作为写作灵感来源。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 结语 -->
+    <section class="max-w-3xl mx-auto mb-20 text-center">
+      <div class="theme-divider w-32 mx-auto mb-8"></div>
+      <h2 class="serif text-2xl font-bold mb-4" style="color: var(--primary-color);">心之所向，文墨生光</h2>
+      <p class="text-lg leading-relaxed">期待你的佳作，与我们共同点亮阅读的世界！</p>
+      <div class="mt-8">
+        <a href="#" class="btn-primary px-8 py-4 rounded-lg font-medium inline-block">
+          <i class="fas fa-paper-plane mr-2"></i>
+          立即投稿
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <!-- 页脚 -->
+  <footer class="py-10" style="background-color: var(--bg-secondary);">
+    <div class="container mx-auto px-4">
+      <div class="max-w-5xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8">
+          <div class="flex items-center space-x-2 mb-4 md:mb-0">
+            <i class="fas fa-book-open text-2xl" style="color: var(--primary-color);"></i>
+            <span class="serif font-bold text-lg">世界读书日主题征文活动</span>
+          </div>
+          <div class="flex space-x-4">
+            <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color: var(--primary-color);">
+              <i class="fab fa-weixin text-white"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color: var(--secondary-color);">
+              <i class="fab fa-weibo text-white"></i>
+            </a>
+            <a href="#" class="w-10 h-10 rounded-full flex items-center justify-center" style="background-color: var(--accent-color);">
+              <i class="fas fa-envelope text-white"></i>
+            </a>
+          </div>
+        </div>
+        <div class="text-center text-sm opacity-70">
+          <p>© 2025 微信读书社群. 保留所有权利.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 浮动按钮 -->
+  <div class="floating-action">
+    <a href="#" class="w-12 h-12 rounded-full shadow-lg flex items-center justify-center" style="background-color: var(--primary-color);">
+      <i class="fas fa-arrow-up text-white"></i>
+    </a>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // 初始化 Mermaid
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default',
+      flowchart: { curve: 'basis' }
+    });
+    
+    // 深色模式切换
+    const themeToggle = document.getElementById('theme-toggle');
+    
+    // 检查系统偏好
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.documentElement.classList.add('dark');
+    }
+    
+    // 检查本地存储中的主题偏好
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else if (savedTheme === 'light') {
+      document.documentElement.classList.remove('dark');
+    }
+    
+    // 主题切换按钮点击事件
+    themeToggle.addEventListener('click', () => {
+      if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+        mermaid.initialize({ theme: 'default' });
+      } else {
+        document.documentElement.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+        mermaid.initialize({ theme: 'dark' });
+      }
+      
+      // 重新渲染 Mermaid 图表
+      mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+    });
+    
+    // 监听系统主题变化
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        if (e.matches) {
+          document.documentElement.classList.add('dark');
+          mermaid.initialize({ theme: 'dark' });
+        } else {
+          document.documentElement.classList.remove('dark');
+          mermaid.initialize({ theme: 'default' });
+        }
+        
+        // 重新渲染 Mermaid 图表
+        mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+      });
+    }
+  </script>
+</body>
+</html>
